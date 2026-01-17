@@ -1,9 +1,11 @@
 import React from 'react'
-
+import { useParams } from 'react-router-dom'
 const MovieDetails = () => {
+    const {id } = useParams();
   return (
     <div>
-      face 
+     <h1>Movie Details Page</h1>
+     <p>Movie id: {id}</p>
     </div>
   )
 }

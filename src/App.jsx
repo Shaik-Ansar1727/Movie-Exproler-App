@@ -3,31 +3,46 @@ import './App.css'
 import Home from './Pages/Home'
 import MovieDetails from './Pages/MovieDetails'
 import Search from './Pages/Search'
+import About from './Pages/About'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import Layout from './Layout'
+
 
 
 function App() {
 
   const router = createBrowserRouter([
     {
-      path:"/",
-      element: <Home/>
-    },
-    {
-      path:"/moviedetails",
-      element: <MovieDetails/>
-    },
-    {
-       path:"/search",
-      element: <Search/>
+      path: "/",
+      element: <Layout />,
+      children: [
+        {
+          index: true,
+          element: <Home />,
+        },
+        {
+          path: "search",
+          element: <Search />,
+        },
+        {
+          path: "movie/:id",
+          element: <MovieDetails />,
+        },
+        {
+          path: "about",
+          element: <About />,
+        }
+
+
+      ]
     }
+
   ])
 
   return (
     <>
-    
-       <RouterProvider router={router} />
-      
+      <RouterProvider router={router} />
+
     </>
   )
 }
