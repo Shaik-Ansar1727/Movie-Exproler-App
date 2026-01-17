@@ -1,18 +1,19 @@
-import { Link ,useNavigate} from "react-router-dom";
-
-
+import { useNavigate } from "react-router-dom";
 import { fetchPopularMovies, IMAGE_BASE_URL } from '../Services/tmdb';
 import { useQuery } from "@tanstack/react-query";
 import {
+    PageContainer,
     PageTitle,
     MovieList,
     MovieCard,
     Poster,
+    MovieTitle
 } from "../Styles";
 
-const navigate = useNavigate();
 
 const Home = () => {
+    const navigate = useNavigate();
+
     const { data, isLoading, error } = useQuery({
         queryKey: ["PopularMovies"],
         queryFn: fetchPopularMovies,
@@ -26,31 +27,27 @@ const Home = () => {
         return <p>Error loading movies</p>
     }
 
-    
+
     return (
         <>
-            Home
-            <Link to="/search">Search</Link>
-
-            
 
 
-            <div>
-                <PageTitle>Popular Movies</PageTitle>
+          
+                <PageContainer>
+                    <PageTitle>Popular Movies</PageTitle>
 
-                <MovieList >
-                    {data.results.map((movie) => (
-                        <MovieCard key={movie.id} onClick={()=>{navigate(`/movies/${movie.id}`)}}>
-                            <Poster
-                                src={`${IMAGE_BASE_URL}${movie.poster_path}`}
-                                alt={movie.title}
-                            />
-                            <p>{movie.title}</p>
-                        </MovieCard>
-                    ))}
-                </MovieList>
-            </div>
-
+                    <MovieList >
+                        {data.results.map((movie) => (
+                            <MovieCard key={movie.id} onClick={() => { navigate(`/movie/${movie.id}`) }}>
+                                <Poster
+                                    src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+                                    alt={movie.title}
+                                />
+                                <MovieTitle>{movie.title}</MovieTitle>
+                            </MovieCard>
+                        ))}
+                    </MovieList>
+                </PageContainer>
 
 
         </>

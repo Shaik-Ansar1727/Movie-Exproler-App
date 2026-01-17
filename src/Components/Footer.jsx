@@ -1,11 +1,13 @@
-import React from 'react'
+import { FooterWrapper, FooterText } from "../Styles";
 
 const Footer = () => {
   return (
-    <div>
-      im footer
-    </div>
-  )
-}
+    <FooterWrapper>
+      <FooterText>
+        © {new Date().getFullYear()} Movie Explorer · Built with React & TMDb
+      </FooterText>
+    </FooterWrapper>
+  );
+};
 
-export default Footer
+export default Footer;
