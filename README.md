@@ -72,7 +72,7 @@ The application follows a clean separation of concerns to ensure scalability and
 ![Search Results](screenshots/search.png)
 
 ### Movie Details Page
-![Movie Details](screenshots/movie-details.png)
+![Movie Details](screenshots/movie-detail.png)
 
 ### Error / Fallback UI
 ![Error Message](screenshots/error-message.png)
@@ -83,9 +83,14 @@ The application follows a clean separation of concerns to ensure scalability and
 
 1. Clone the repository  
 2. Install dependencies  
+
    ```bash
    npm install
 3. Create a .env file and add your TMDb API key
-  ```  VITE_TMDB_API_KEY=your_api_key_here
+
+    ```bash
+    VITE_TMDB_API_KEY=your_api_key_here
+
 4. Run the application
-    ```npm run dev
+    ```bash
+       npm run dev
