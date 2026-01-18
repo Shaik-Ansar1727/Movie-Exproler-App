@@ -26,7 +26,7 @@ const Search = () => {
         queryKey: ["search", query],
         queryFn: () => searchMovies(query),
         enabled: !!query,
-        cacheTime: 1000 * 60 * 2, // 2 minutes
+        gcTime: 1000 * 60 * 2,
         refetchOnWindowFocus: false,
     });
 

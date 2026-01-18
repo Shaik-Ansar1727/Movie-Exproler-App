@@ -33,21 +33,21 @@ const MovieDetails = () => {
     return (<Loading />);
   }
 
-if (error) {
-  const isNotFound = error.message === "NOT_FOUND";
+  if (error) {
+    const isNotFound = error.message === "NOT_FOUND";
 
-  return (
-    <ErrorState
-      title={isNotFound ? "Movie not found" : "Something went wrong"}
-      message={
-        isNotFound
-          ? "The movie you’re looking for doesn’t exist."
-          : "Please try again later."
-      }
-      onRetry={() => navigate("/")}
-    />
-  );
-}
+    return (
+      <ErrorState
+        title={isNotFound ? "Movie not found" : "Something went wrong"}
+        message={
+          isNotFound
+            ? "The movie you’re looking for doesn’t exist."
+            : "Please try again later."
+        }
+        onRetry={() => navigate("/")}
+      />
+    );
+  }
 
 
 

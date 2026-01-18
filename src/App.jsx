@@ -9,7 +9,6 @@ import NotFound from './Pages/NotFound'
 
 
 
-
 function App() {
 
   const router = createBrowserRouter([
@@ -34,12 +33,6 @@ function App() {
           path: "about",
           element: <About />,
         },
-        {
-          path: "*",
-          element: <NotFound />,
-        },
-
-
       ]
     }
 

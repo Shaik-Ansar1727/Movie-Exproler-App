@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+
+
 export const DetailsContainer = styled.div`
   min-height: 100vh;
   padding: 3rem 2rem;
