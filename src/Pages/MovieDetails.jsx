@@ -1,6 +1,8 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMovieById, IMAGE_BASE_URL } from "../Services/tmdb";
+import Loading from "../Components/Loading";
+import ErrorState from "../Components/ErrorState";
 
 import {
   DetailsContainer,
@@ -13,19 +15,41 @@ import {
   InfoItem,
   SectionTitle,
   OverviewText
-} from "../Styles";
+} from "../Styles/MovieDetails.styles";
+
+import { getPosterUrl } from "../utils/getPosterUrl";
+
 
 const MovieDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error, refetch } = useQuery({
     queryKey: ["movie", id],
     queryFn: () => fetchMovieById(id),
   });
 
-  if (isLoading) return <p>Loading movie...</p>;
-  if (error) return <p>Error loading movie</p>;
+  if (isLoading) {
+    return (<Loading />);
+  }
+
+if (error) {
+  const isNotFound = error.message === "NOT_FOUND";
+
+  return (
+    <ErrorState
+      title={isNotFound ? "Movie not found" : "Something went wrong"}
+      message={
+        isNotFound
+          ? "The movie you’re looking for doesn’t exist."
+          : "Please try again later."
+      }
+      onRetry={() => navigate("/")}
+    />
+  );
+}
+
+
 
   const releaseYear = data.release_date
     ? data.release_date.split("-")[0]
@@ -53,9 +77,10 @@ const MovieDetails = () => {
 
         {data.poster_path && (
           <Poster
-            src={`${IMAGE_BASE_URL}${data.poster_path}`}
+            src={getPosterUrl(data.poster_path)}
             alt={data.title}
           />
+
         )}
 
         <InfoGrid>

@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import Home from './Pages/Home'
 import MovieDetails from './Pages/MovieDetails'
@@ -6,6 +5,8 @@ import Search from './Pages/Search'
 import About from './Pages/About'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './Layout'
+import NotFound from './Pages/NotFound'
+
 
 
 
@@ -15,6 +16,7 @@ function App() {
     {
       path: "/",
       element: <Layout />,
+      errorElement: <NotFound />,
       children: [
         {
           index: true,
@@ -31,7 +33,11 @@ function App() {
         {
           path: "about",
           element: <About />,
-        }
+        },
+        {
+          path: "*",
+          element: <NotFound />,
+        },
 
 
       ]

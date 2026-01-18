@@ -2,14 +2,19 @@ import { useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { searchMovies, IMAGE_BASE_URL } from "../Services/tmdb";
 import { useNavigate } from "react-router-dom";
+import Loading from "../Components/Loading";
+import ErrorState from "../Components/ErrorState";
 import {
     PageContainer,
     PageTitle,
     MovieList,
     MovieCard,
     Poster,
-    MovieTitle
+    MovieTitle,
+    BackButton,
 } from "../Styles";
+import { getPosterUrl } from "../utils/getPosterUrl";
+
 
 
 const Search = () => {
@@ -17,31 +22,53 @@ const Search = () => {
     const [searchParams] = useSearchParams();
     const query = searchParams.get("query");
 
-    const { data, isLoading, error } = useQuery({
+    const { data, isLoading, error, refetch } = useQuery({
         queryKey: ["search", query],
         queryFn: () => searchMovies(query),
         enabled: !!query,
+        cacheTime: 1000 * 60 * 2, // 2 minutes
+        refetchOnWindowFocus: false,
     });
 
-    if (isLoading) return <p>Loading movies...</p>;
-    if (error) return <p>Error loading movies</p>;
+    if (isLoading) {
+        return (<Loading />);
+    }
+    if (error) {
+        return (
+            <ErrorState
+                title="Movie not found"
+                message="The movie you’re looking for doesn’t exist or was removed."
+                onRetry={() => navigate(-1)}
+            />
+        );
+    }
+
+
 
     if (!data?.results?.length) {
-        return <p>No movies found</p>;
+        return (
+            <ErrorState
+                title="No movies found"
+                message="Try searching with a different keyword."
+            />
+        );
     }
 
     return (
 
         <PageContainer>
+            <BackButton onClick={() => navigate(-1)}>Back</BackButton>
+
             <PageTitle>{`Results for ${query}`}</PageTitle>
 
             <MovieList >
                 {data.results.map((movie) => (
                     <MovieCard key={movie.id} onClick={() => { navigate(`/movie/${movie.id}`) }}>
                         <Poster
-                            src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+                            src={getPosterUrl(movie.poster_path)}
                             alt={movie.title}
                         />
+
                         <MovieTitle>{movie.title}</MovieTitle>
 
                     </MovieCard>

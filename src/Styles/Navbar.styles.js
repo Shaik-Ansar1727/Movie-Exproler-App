@@ -101,3 +101,10 @@ export const SearchButton = styled.button`
     transform: scale(0.95);
   }
 `;
+
+
+export const ErrorText = styled.p`
+  margin-top: 0.4rem;
+  color: #ff6b81;
+  font-size: 0.85rem;
+`;

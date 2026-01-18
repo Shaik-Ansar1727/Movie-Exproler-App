@@ -27,13 +27,18 @@ export const fetchMovieById = async (id) => {
     const response = await fetch(
         `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
     );
+
+    if (response.status === 404) {
+        throw new Error("NOT_FOUND");
+    }
+
     if (!response.ok) {
-        throw new Error("Failed to load movie details");
+        throw new Error("FAILED");
     }
 
     return response.json();
-
 };
+
 
 
 export const searchMovies = async (query) => {
